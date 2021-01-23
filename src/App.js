@@ -2,32 +2,36 @@ import './App.css';
 import AddNewUser from './AddNewUser'
 import UserList from './UserList'
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 class App extends Component {
   state = {
     users: [{ name: 'Timur', surname: 'Khaydarov', username: 'chalob' }]
   }
 
-  existUserHandle = (username) => {
+  handleUserExists = (username) => {
     return this.state.users.find(u => u.username === username)
   }
 
-  addUserHandle = (user) => {
-    console.log(JSON.stringify(user))
+  handleAddUser = (user) => {
     this.state.users.push(user)
-    this.setState({ users: this.state.users })
+    this.setState({})
   }
 
   render() {
     return (
       <div className="App" >
         <div className="container">
-          <AddNewUser addCallback={this.addUserHandle} existsCallback={this.existUserHandle} />
+          <AddNewUser onAddUser={this.handleAddUser} onUserExists={this.handleUserExists} />
           <UserList users={this.state.users} />
         </div>
       </div>
     )
   }
+}
+
+App.propTypes = {
+  users: PropTypes.array
 }
 
 export default App;

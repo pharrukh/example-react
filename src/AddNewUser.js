@@ -1,4 +1,5 @@
 import { Component } from "react";
+import PropTypes from 'prop-types';
 
 class AddNewUser extends Component {
     state = {
@@ -13,7 +14,7 @@ class AddNewUser extends Component {
 
     onUsernameChangeHandle = (event) => {
         this.setState({ username: event.target.value })
-        if (this.props.existsCallback(event.target.value)) {
+        if (this.props.onUserExists(event.target.value)) {
             this.setState({ error: 'username is taken' })
         } else {
             this.setState({ error: '' })
@@ -21,7 +22,7 @@ class AddNewUser extends Component {
     }
 
     onAddUserHandle = (event) => {
-        this.props.addCallback({ name: this.state.name, surname: this.state.surname, username: this.state.username })
+        this.props.onAddUser({ name: this.state.name, surname: this.state.surname, username: this.state.username })
         this.setState({
             name: '',
             surname: '',
@@ -36,9 +37,18 @@ class AddNewUser extends Component {
             <input value={this.state.surname} onChange={e => this.setState({ surname: e.target.value })}></input><br />
             <input value={this.state.username} onChange={this.onUsernameChangeHandle}></input><br />
             <p>{this.state.error ?? ''}</p>
-            <button disabled={!this.allValuesArePassed() || this.props.existsCallback(this.state.username)} onClick={this.onAddUserHandle}>add</button>
+            <button disabled={!this.allValuesArePassed() || this.props.onUserExists(this.state.username)} onClick={this.onAddUserHandle}>add</button>
         </div>)
     }
+}
+
+AddNewUser.propTypes = {
+    name: PropTypes.string,
+    surname: PropTypes.string,
+    username: PropTypes.string,
+    error: PropTypes.string,
+    onUserExists: PropTypes.func,
+    onAddUserHandle: PropTypes.func,
 }
 
 export default AddNewUser;
