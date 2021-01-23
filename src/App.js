@@ -1,4 +1,3 @@
-import logo from './logo.svg';
 import './App.css';
 import AddNewUser from './AddNewUser'
 import UserList from './UserList'
@@ -22,7 +21,7 @@ class App extends Component {
   render() {
     return (
       <div className="App" >
-        <div class="container">
+        <div className="container">
           <AddNewUser addCallback={this.addUserHandle} existsCallback={this.existUserHandle} />
           <UserList users={this.state.users} />
         </div>

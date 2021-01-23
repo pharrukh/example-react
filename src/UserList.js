@@ -11,7 +11,7 @@ class UserList extends Component {
     }
 
     render() {
-        const list = this.props.users.map(u => (<UserListItem username={u.username} showGameNumber={this.state.hide} />))
+        const list = this.props.users.map(u => (<UserListItem key={u.username} username={u.username} showGameNumber={this.state.hide} />))
         return (<div>{list}<button onClick={this.onHideHandle}>{this.state.hide ? 'hide' : 'show'}</button></div>)
     }
 }
